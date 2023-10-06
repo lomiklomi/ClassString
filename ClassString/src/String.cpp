@@ -8,16 +8,17 @@ IString& IString::operator=(
     if (this == &rhs)
         return *this;
     delete[] str;
-    str = new char[strlen(rhs.str) + 1];
-    strcpy_s(str, strlen(rhs.str) + 1, rhs.str);
+    str = new char[rhs.size + 1];
+    strcpy_s(str, rhs.size + 1, rhs.str);
+    size = rhs.size;
     return *this;
 }
 
 IString operator+(const IString& lhs,
                   const IString& rhs)
 {
-    size_t length = strlen(lhs.str)
-                  + strlen(rhs.str);
+    size_t length = lhs.size
+                  + rhs.size;
 
     char* buff = new char[length + 1];
 
@@ -58,19 +59,22 @@ void IString::swp(IString& rhs)
 IString::IString()
 	: str { nullptr } {
 	str = new char[1];
+    size = 1;
 	str[0] = '\0';
 }
 
 IString::IString(const char* val) {
     if (val == nullptr) {
         str = new char[1];
+        size = 1;
         str[0] = '\0';
     }
     else {
-        str = new char[strlen(val) + 1];
+        size = (strlen(val));
+        str = new char[size + 1];
 
-        strcpy_s(str, strlen(val) + 1, val);
-        str[strlen(val)] = '\0';
+        strcpy_s(str, size + 1, val);
+        str[size] = '\0';
 
         // printf("Created: ");
         // printf(str);
@@ -81,9 +85,10 @@ IString::IString(const char* val) {
 // Copy Constructor
 IString::IString(const IString& source)
 {
-    str = new char[strlen(source.str) + 1];
-    strcpy_s(str, strlen(source.str) + 1, source.str);
-    str[strlen(source.str)] = '\0';
+    str = new char[source.size + 1];
+    size = source.size;
+    strcpy_s(str, source.size + 1, source.str);
+    str[source.size] = '\0';
 
     // printf("Copied ");
     // printf(str);
@@ -92,7 +97,7 @@ IString::IString(const IString& source)
 
 // Move Constructor
 IString::IString(IString&& source) noexcept 
-    : str(source.str)
+    : str(source.str), size(source.size)
 {
     // printf(source.str);
     // printf(" is Moved!\n");
