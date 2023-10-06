@@ -3,6 +3,7 @@
 class IString {
 private:
 	char* str;
+	size_t size;
 public:
 	IString();
 
