@@ -12,6 +12,8 @@ int main() {
     printf("опнцпюллю-опхлеп\n\n");
     std::vector<IString> vec1{"ch1", "Hello", "World!", "Aasfasfas", "Bfasfasfa", "Cavavasafd"};
     vec1[1] = vec1[3] + vec1[3];
+    vec1[0] += vec1[4];
+
     printf("Elements: \n");
     for (int i = 0; i < vec1.size(); i++) {
         vec1[i].Print();
